@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Вишлист</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="header-left">
+            <button id="profileBtn" class="profile-btn" title="Профиль">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </button>
+        </div>
+        <div class="header-center">
+            <h1 class="title">Вишлист</h1>
+            <p id="currentUser" class="username">Загрузка...</p>
+        </div>
+        <div class="header-right"></div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main class="main-content">
+        <!-- Страница: Главная (список категорий) -->
+        <section id="homePage" class="page active">
+            <div class="categories-container">
+                <h2 class="section-title">Категории</h2>
+                <div id="categoriesList" class="categories-list">
+                    <!-- Категории будут добавляться динамически -->
+                </div>
+                <button id="addCategoryBtn" class="add-category-btn" title="Добавить категорию">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Страница: Категория (детали категории) -->
+        <section id="categoryPage" class="page">
+            <div class="category-header">
+                <button id="backBtn" class="back-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Назад
+                </button>
+                <div class="category-info">
+                    <h2 id="categoryTitle" class="category-title">Категория</h2>
+                    <p id="categoryTotal" class="category-total">Общая сумма: 0 ₽</p>
+                </div>
+            </div>
+
+            <div class="subgroups-container">
+                <div id="subgroupsList" class="subgroups-list">
+                    <!-- Подгруппы будут добавляться динамически -->
+                </div>
+                
+                <div class="category-actions">
+                    <button id="addSubgroupBtn" class="action-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Добавить подгруппу
+                    </button>
+                    <button id="addItemDirectBtn" class="action-btn secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Добавить вещь
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <p>© Karabanev.D <span id="currentYear"></span></p>
+    </footer>
+
+    <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
+
+    <!-- МОДАЛЬНОЕ ОКНО: Авторизация (Вход / Регистрация) -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="authModalTitle">Вход</h3>
+                <button class="modal-close" data-modal="authModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Форма входа -->
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Пароль</label>
+                        <input type="password" id="loginPassword" placeholder="Введите пароль" required>
+                    </div>
+                    <div id="loginError" class="error-message"></div>
+                    <button type="submit" class="btn-primary btn-full">Войти</button>
+                    <div class="auth-switch">
+                        <span>Нет аккаунта?</span>
+                        <button type="button" id="showRegister" class="link-btn">Зарегистрироваться</button>
+                    </div>
+                </form>
+
+                <!-- Форма регистрации -->
+                <form id="registerForm" class="hidden">
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Пароль (минимум 6 символов)</label>
+                        <input type="password" id="registerPassword" placeholder="Придумайте пароль" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPasswordConfirm">Подтвердите пароль</label>
+                        <input type="password" id="registerPasswordConfirm" placeholder="Повторите пароль" required minlength="6">
+                    </div>
+                    <div id="registerError" class="error-message"></div>
+                    <button type="submit" class="btn-primary btn-full">Зарегистрироваться</button>
+                    <div class="auth-switch">
+                        <span>Уже есть аккаунт?</span>
+                        <button type="button" id="showLogin" class="link-btn">Войти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование категории -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="categoryModalTitle">Новая категория</h3>
+                <button class="modal-close" data-modal="categoryModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <input type="hidden" id="categoryId">
+                    <div class="form-group">
+                        <label for="categoryNameInput">Название категории</label>
+                        <input type="text" id="categoryNameInput" placeholder="Например: Техника" required>
+                    </div>
+                    <div id="categoryError" class="error-message"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" data-modal="categoryModal">Отмена</button>
+                        <button type="submit" class="btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование подгруппы -->
+    <div id="subgroupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="subgroupModalTitle">Новая подгруппа</h3>
+                <button class="modal-close" data-modal="subgroupModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="subgroupForm">
+                    <input type="hidden" id="subgroupId">
+                    <div class="form-group">
+                        <label for="subgroupNameInput">Название подгруппы</label>
+                        <input type="text" id="subgroupNameInput" placeholder="Например: Ноутбуки" required>
+                    </div>
+                    <div id="subgroupError" class="error-message"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" data-modal="subgroupModal">Отмена</button>
+                        <button type="submit" class="btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование вещи -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="itemModalTitle">Новая вещь</h3>
+                <button class="modal-close" data-modal="itemModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <input type="hidden" id="itemId">
+                    <input type="hidden" id="itemSubgroupId">
+                    <div class="form-group">
+                        <label for="itemNameInput">Название</label>
+                        <input type="text" id="itemNameInput" placeholder="Например: MacBook Pro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemPriceInput">Цена (₽)</label>
+                        <input type="number" id="itemPriceInput" placeholder="0" min="0" step="1" required>
+                    </div>
+                    <div id="itemError" class="error-message"></div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" data-modal="itemModal">Отмена</button>
+                        <button type="submit" class="btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: Подтверждение удаления -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Подтверждение</h3>
+                <button class="modal-close" data-modal="confirmModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Вы уверены?</p>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" data-modal="confirmModal">Отмена</button>
+                    <button type="button" id="confirmBtn" class="btn-danger">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО: Выбор действия при удалении подгруппы -->
+    <div id="deleteSubgroupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Удаление подгруппы</h3>
+                <button class="modal-close" data-modal="deleteSubgroupModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>В подгруппе есть вещи. Что сделать с ними?</p>
+                <div class="form-actions vertical">
+                    <button type="button" id="moveItemsBtn" class="btn-primary">
+                        Перенести в "Общее"
+                    </button>
+                    <button type="button" id="deleteItemsBtn" class="btn-danger">
+                        Удалить вместе с подгруппой
+                    </button>
+                    <button type="button" class="btn-secondary" data-modal="deleteSubgroupModal">
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- УВЕДОМЛЕНИЯ -->
+    <div id="notification" class="notification"></div>
+
+    <!-- ==================== FIREBASE + APP SCRIPT ==================== -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
