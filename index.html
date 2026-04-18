@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ШАПКА -->
     <header class="header">
         <div class="header-left">
             <button id="profileBtn" class="profile-btn" title="Профиль">
@@ -19,78 +18,49 @@
         </div>
         <div class="header-center">
             <h1 class="title">Вишлист</h1>
-            <p id="currentUser" class="username">Загрузка...</p>
+            <div id="currentUser" class="username">Не авторизован</div>
         </div>
-        <div class="header-right"></div>
+        <div class="header-right">
+            <!-- Кнопка выхода скрыта, так как выход осуществляется через кнопку профиля -->
+        </div>
     </header>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="main-content">
-        <!-- Страница: Главная (список категорий) -->
-        <section id="homePage" class="page active">
+        <!-- Главная страница -->
+        <div id="homePage" class="page active">
+            <h2 class="section-title">Категории</h2>
             <div class="categories-container">
-                <h2 class="section-title">Категории</h2>
-                <div id="categoriesList" class="categories-list">
-                    <!-- Категории будут добавляться динамически -->
-                </div>
-                <button id="addCategoryBtn" class="add-category-btn" title="Добавить категорию">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div id="categoriesList" class="categories-list"></div>
+                <button id="addCategoryBtn" class="add-category-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
                 </button>
             </div>
-        </section>
+        </div>
 
-        <!-- Страница: Категория (детали категории) -->
-        <section id="categoryPage" class="page">
+        <!-- Страница категории -->
+        <div id="categoryPage" class="page">
+            <button id="backBtn" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Назад
+            </button>
             <div class="category-header">
-                <button id="backBtn" class="back-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    Назад
-                </button>
-                <div class="category-info">
-                    <h2 id="categoryTitle" class="category-title">Категория</h2>
-                    <p id="categoryTotal" class="category-total">Общая сумма: 0 ₽</p>
-                </div>
+                <h2 id="categoryTitle" class="category-title">Категория</h2>
+                <div id="categoryTotal" class="category-total">Общая сумма: 0 ₽</div>
             </div>
-
-            <div class="subgroups-container">
-                <div id="subgroupsList" class="subgroups-list">
-                    <!-- Подгруппы будут добавляться динамически -->
-                </div>
-                
-                <div class="category-actions">
-                    <button id="addSubgroupBtn" class="action-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        Добавить подгруппу
-                    </button>
-                    <button id="addItemDirectBtn" class="action-btn secondary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        Добавить вещь
-                    </button>
-                </div>
+            <div class="category-actions">
+                <button id="addSubgroupBtn" class="action-btn secondary">Добавить подгруппу</button>
+                <button id="addItemDirectBtn" class="action-btn secondary">Добавить вещь</button>
             </div>
-        </section>
+            <div id="subgroupsList" class="subgroups-list"></div>
+        </div>
     </main>
 
-    <!-- ПОДВАЛ -->
-    <footer class="footer">
-        <p>© Karabanev.D <span id="currentYear"></span></p>
-    </footer>
-
-    <!-- ==================== МОДАЛЬНЫЕ ОКНА ==================== -->
-
-    <!-- МОДАЛЬНОЕ ОКНО: Авторизация (Вход / Регистрация) -->
+    <!-- Модальное окно Авторизации -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -98,50 +68,52 @@
                 <button class="modal-close" data-modal="authModal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- Форма входа -->
+                <!-- Форма Входа -->
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="example@mail.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="loginPassword">Пароль</label>
-                        <input type="password" id="loginPassword" placeholder="Введите пароль" required>
+                        <label>Пароль</label>
+                        <input type="password" id="loginPassword" placeholder="Минимум 6 символов" required minlength="6">
                     </div>
                     <div id="loginError" class="error-message"></div>
-                    <button type="submit" class="btn-primary btn-full">Войти</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary btn-full">Войти</button>
+                    </div>
                     <div class="auth-switch">
-                        <span>Нет аккаунта?</span>
-                        <button type="button" id="showRegister" class="link-btn">Зарегистрироваться</button>
+                        Нет аккаунта? <button type="button" id="showRegister" class="link-btn">Зарегистрироваться</button>
                     </div>
                 </form>
 
-                <!-- Форма регистрации -->
+                <!-- Форма Регистрации (скрыта по умолчанию) -->
                 <form id="registerForm" class="hidden">
                     <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" placeholder="example@mail.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="registerPassword">Пароль (минимум 6 символов)</label>
-                        <input type="password" id="registerPassword" placeholder="Придумайте пароль" required minlength="6">
+                        <label>Пароль</label>
+                        <input type="password" id="registerPassword" placeholder="Минимум 6 символов" required minlength="6">
                     </div>
                     <div class="form-group">
-                        <label for="registerPasswordConfirm">Подтвердите пароль</label>
+                        <label>Подтвердите пароль</label>
                         <input type="password" id="registerPasswordConfirm" placeholder="Повторите пароль" required minlength="6">
                     </div>
                     <div id="registerError" class="error-message"></div>
-                    <button type="submit" class="btn-primary btn-full">Зарегистрироваться</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary btn-full">Зарегистрироваться</button>
+                    </div>
                     <div class="auth-switch">
-                        <span>Уже есть аккаунт?</span>
-                        <button type="button" id="showLogin" class="link-btn">Войти</button>
+                        Уже есть аккаунт? <button type="button" id="showLogin" class="link-btn">Войти</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование категории -->
+    <!-- Модальное окно Категории -->
     <div id="categoryModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,8 +124,8 @@
                 <form id="categoryForm">
                     <input type="hidden" id="categoryId">
                     <div class="form-group">
-                        <label for="categoryNameInput">Название категории</label>
-                        <input type="text" id="categoryNameInput" placeholder="Например: Техника" required>
+                        <label>Название категории</label>
+                        <input type="text" id="categoryNameInput" required>
                     </div>
                     <div id="categoryError" class="error-message"></div>
                     <div class="form-actions">
@@ -165,7 +137,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование подгруппы -->
+    <!-- Модальное окно Подгруппы -->
     <div id="subgroupModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -176,8 +148,8 @@
                 <form id="subgroupForm">
                     <input type="hidden" id="subgroupId">
                     <div class="form-group">
-                        <label for="subgroupNameInput">Название подгруппы</label>
-                        <input type="text" id="subgroupNameInput" placeholder="Например: Ноутбуки" required>
+                        <label>Название подгруппы</label>
+                        <input type="text" id="subgroupNameInput" required>
                     </div>
                     <div id="subgroupError" class="error-message"></div>
                     <div class="form-actions">
@@ -189,7 +161,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: Создание/Редактирование вещи -->
+    <!-- Модальное окно Вещи -->
     <div id="itemModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -201,12 +173,12 @@
                     <input type="hidden" id="itemId">
                     <input type="hidden" id="itemSubgroupId">
                     <div class="form-group">
-                        <label for="itemNameInput">Название</label>
-                        <input type="text" id="itemNameInput" placeholder="Например: MacBook Pro" required>
+                        <label>Название</label>
+                        <input type="text" id="itemNameInput" required>
                     </div>
                     <div class="form-group">
-                        <label for="itemPriceInput">Цена (₽)</label>
-                        <input type="number" id="itemPriceInput" placeholder="0" min="0" step="1" required>
+                        <label>Цена (₽)</label>
+                        <input type="number" id="itemPriceInput" min="0" step="0.01" required>
                     </div>
                     <div id="itemError" class="error-message"></div>
                     <div class="form-actions">
@@ -218,7 +190,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: Подтверждение удаления -->
+    <!-- Модальное окно Подтверждения -->
     <div id="confirmModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -235,7 +207,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: Выбор действия при удалении подгруппы -->
+    <!-- Модальное окно Удаления подгруппы -->
     <div id="deleteSubgroupModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -245,24 +217,17 @@
             <div class="modal-body">
                 <p>В подгруппе есть вещи. Что сделать с ними?</p>
                 <div class="form-actions vertical">
-                    <button type="button" id="moveItemsBtn" class="btn-primary">
-                        Перенести в "Общее"
-                    </button>
-                    <button type="button" id="deleteItemsBtn" class="btn-danger">
-                        Удалить вместе с подгруппой
-                    </button>
-                    <button type="button" class="btn-secondary" data-modal="deleteSubgroupModal">
-                        Отмена
-                    </button>
+                    <button type="button" id="moveItemsBtn" class="btn-secondary">Перенести в "Общее"</button>
+                    <button type="button" id="deleteItemsBtn" class="btn-danger">Удалить вместе с подгруппой</button>
+                    <button type="button" class="btn-secondary" data-modal="deleteSubgroupModal" style="margin-top:10px">Отмена</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- УВЕДОМЛЕНИЯ -->
+    <footer class="footer">© Karabanev.D <span id="currentYear"></span></footer>
     <div id="notification" class="notification"></div>
 
-    <!-- ==================== FIREBASE + APP SCRIPT ==================== -->
     <script type="module" src="script.js"></script>
 </body>
 </html>
